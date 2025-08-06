@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
 const usersSchema = mongoose.Schema({
   username: {
@@ -23,18 +24,31 @@ const usersSchema = mongoose.Schema({
     minlength: [3, "first name must be 3 charcters or more."],
     maxLength: [15, "first name must be less than or equal 15 characters."]
   },
+  role: {
+    type: String,
+    enum: ['user','admin'],
+    default: 'user'
+  },
+ 
   dob: {
     type: Date
 
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
   }
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now
+  // },
+  // updatedAt: {
+  //   type: Date,
+  //   default: Date.now
+  // }
+}, { timestamps: true })
+
+usersSchema.pre('save', async function () {
+  let salt = await bcrypt.genSalt(10)
+  let hash = await bcrypt.hash(this.password, salt)
+  this.password = hash
+
 })
 
 const usersModel = mongoose.model('users', usersSchema)

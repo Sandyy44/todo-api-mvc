@@ -16,15 +16,15 @@ const todosSchema = mongoose.Schema({
     enum: ['new', 'in progress', 'done'],
     default: 'new'
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  }
-})
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now
+  // },
+  // updatedAt: {
+  //   type: Date,
+  //   default: Date.now
+  // }
+},{timestamps: true})
 
 const todosModel = mongoose.model('todos', todosSchema)
 module.exports = todosModel

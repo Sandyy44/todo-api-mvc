@@ -1,11 +1,15 @@
 const express = require('express')
 const router = express.Router()
-
+const { auth, restricTo } = require('../Middlewares/auth.middleware')
 const userController = require('../Controller/users.controller')
 
-router.post('/', userController.registerNewUser)
-router.get('/', userController.getUsersFirstName)
-router.delete('/:id', userController.deleteUserById)
-router.patch('/:id', userController.updateUserById)
+router.post('/', auth, restricTo('admin'), userController.registerNewUser)
+router.get('/', auth, restricTo('admin', 'user'), userController.getUsersFirstName)
+router.delete('/:id', auth, restricTo('admin'), userController.deleteUserById)
+router.patch('/:id', auth, restricTo('admin', 'user'), userController.updateUserById)
+
+router.post('/login', userController.login)
+
+
 
 module.exports = router

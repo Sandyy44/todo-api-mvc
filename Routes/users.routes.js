@@ -9,6 +9,7 @@ router.delete('/:id', auth, restricTo('admin'), userController.deleteUserById)
 router.patch('/:id', auth, restricTo('admin', 'user'), userController.updateUserById)
 
 router.post('/login', userController.login)
+router.post('/refreshtoken',userController.refreshToken )
 
 
 

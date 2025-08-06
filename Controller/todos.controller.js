@@ -2,8 +2,11 @@ const todosModel = require('../Model/todos.model')
 
 exports.createNewTodo = async (req, res) => {
   let newTodo = req.body
+  let userId = req.id
   try {
-    const todo = await todosModel.create(newTodo)
+    newTodo.userId=userId
+    let todo = await todosModel.create(newTodo)
+  
     res.status(201).json({ message: "Created To-Do successfully", data: todo })
   } catch (error) {
     const messages = Object.values(error.errors).map(e => e.message);

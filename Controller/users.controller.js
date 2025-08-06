@@ -2,6 +2,7 @@ const usersModel = require('../Model/users.model')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const dotenv = require('dotenv').config()
+const { promisify } = require('util')
 exports.registerNewUser = async (req, res) => {
 
   let newUser = req.body
@@ -69,10 +70,32 @@ exports.login = async (req, res) => {
   try {
     let flag = await bcrypt.compare(password, user.password)
     if (!flag) return res.status(404).json({ message: "Wrong username or password" })
-    let token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.TOKEN_PRIVATE_KEY, { expiresIn: '10h' })
-    res.status(200).json({ message: "Welcome!", data: { user, token } })
+    let token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.TOKEN_PRIVATE_KEY, { expiresIn: '10s' })
+
+    let refreshToken = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.REFRESH_TOKEN_PRIVATE_KEY, { expiresIn: '14d' })
+
+    const updatedUser = await usersModel.findByIdAndUpdate(user._id, { $set: { refreshToken } }, { new: true })
+    res.status(200).json({ message: "Welcome!", data: { updatedUser, token, refreshToken } })
   } catch (error) {
     console.log(error)
     res.status(400).json({ message: "login & token process failed" })
   }
+}
+
+exports.refreshToken = async (req, res) => {
+  const {refreshToken} = req.body;
+
+  try {
+    let payload = await promisify(jwt.verify)(refreshToken, process.env.REFRESH_TOKEN_PRIVATE_KEY)
+    if (!payload) return res.status(401).json({ message: "unauthorized" })
+
+    let user = await usersModel.findOne({ _id: payload.id })
+    if (!user) return res.status(401).json({ message: "unauthorized" })//invalid token
+    let token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.TOKEN_PRIVATE_KEY, { expiresIn: '20s' })
+    res.status(200).json({ token })
+
+
+  } catch (error) {
+    console.log(error)
+return res.status(403).json({ message: "forbidden" })  }
 }

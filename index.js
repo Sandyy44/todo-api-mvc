@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const port = 4588;
 
 const usersRoutes = require('./Routes/users.routes')
-const todosRoutes = require('./Routes/todos.routes');
+const todosRoutes = require('./Routes/todos.routes')
 app.use(express.json())
 app.use('/users', usersRoutes)
 app.use('/todos', todosRoutes)

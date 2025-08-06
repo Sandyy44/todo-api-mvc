@@ -2,8 +2,9 @@ const mongoose = require('mongoose')
 
 const todosSchema = mongoose.Schema({
   userId: {
-     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'users'
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'users',
+    required: true
   },
   title: {
     type: String,
@@ -15,16 +16,8 @@ const todosSchema = mongoose.Schema({
     type: String,
     enum: ['new', 'in progress', 'done'],
     default: 'new'
-  },
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now
-  // },
-  // updatedAt: {
-  //   type: Date,
-  //   default: Date.now
-  // }
-},{timestamps: true})
+  }
+}, { timestamps: true })
 
 const todosModel = mongoose.model('todos', todosSchema)
 module.exports = todosModel

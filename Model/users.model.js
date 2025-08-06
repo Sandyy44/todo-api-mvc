@@ -29,20 +29,14 @@ const usersSchema = mongoose.Schema({
     enum: ['user','admin'],
     default: 'user'
   },
- 
+  refreshToken:{
+    type: String
+  }
+  ,
   dob: {
     type: Date
 
-  }
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now
-  // },
-  // updatedAt: {
-  //   type: Date,
-  //   default: Date.now
-  // }
-}, { timestamps: true })
+  }}, { timestamps: true })
 
 usersSchema.pre('save', async function () {
   let salt = await bcrypt.genSalt(10)

@@ -2,11 +2,17 @@ const express = require('express')
 const app = express()
 const fs = require('fs');
 const mongoose = require('mongoose')
+const swagger = require('swagger-ui-express')
+const swaggerDoc = require('./swagger.json')
 const port = 4588;
 
 const usersRoutes = require('./Routes/users.routes')
 const todosRoutes = require('./Routes/todos.routes')
+app.use('/api-docs',swagger.serve, swagger.setup(swaggerDoc))
+
 app.use(express.json())
+
+
 app.use('/users', usersRoutes)
 app.use('/todos', todosRoutes)
 

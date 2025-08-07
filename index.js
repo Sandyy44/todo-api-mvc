@@ -8,6 +8,9 @@ const port = 4588;
 
 const usersRoutes = require('./Routes/users.routes')
 const todosRoutes = require('./Routes/todos.routes')
+app.set('view engine','pug')
+app.set('views','./View')
+app.use(express.static("Static"))
 app.use('/api-docs',swagger.serve, swagger.setup(swaggerDoc))
 
 app.use(express.json())

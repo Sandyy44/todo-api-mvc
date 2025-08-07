@@ -1,0 +1,48 @@
+body {
+  background: #e1d0d0;
+  padding: 2rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  padding: 2rem;
+  background: linear-gradient(to bottom left, #e5e0e0, #f9f2f2);
+  border-radius: 1.5rem;
+  box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.2);
+  display: grid;
+  gap: 1rem;
+}
+
+.card .title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  -webkit-text-stroke: 0.3px rgb(214, 71, 71);
+  color: #444;
+}
+
+.card .label {
+  
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  color: #3a525e;
+  -webkit-text-stroke: 0.07px rgb(228, 200, 215);
+  font-weight: bold;
+}
+
+.card .value {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: rgba(172, 79, 79, 0.927);
+}
+
+.card .content {
+  font-size: 1rem;
+  line-height: 1.5;
+}

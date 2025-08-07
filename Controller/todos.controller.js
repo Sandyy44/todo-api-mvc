@@ -54,7 +54,8 @@ exports.getTodos = async (req, res) => {
   let todos = await todosModel.find().populate('userId')
   try {
     if (isNaN(limit) && isNaN(skip)) {
-      res.status(200).json({ message: "Success", data: todos })
+      //res.status(200).json({ message: "Success", data: todos })
+      res.status(200).render('todos',{ message: "Success", todos })
     }
     else {
       let toDoArr = todos

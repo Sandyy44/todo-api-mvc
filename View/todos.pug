@@ -1,0 +1,18 @@
+link(rel="stylesheet", href="style.css")
+.grid-container
+  each todo in todos 
+    .card 
+      .title #{todo.title}
+      .content
+        p
+          span.label ID: 
+          span.value= todo._id
+        p
+          span.label Status: 
+          span.value= todo.status
+        p
+          span.label Created At: 
+          span.value= todo.createdAt
+        p 
+          span.label Updated At: 
+          span.value= todo.updatedAt

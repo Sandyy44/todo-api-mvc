@@ -92,7 +92,7 @@ exports.refreshToken = async (req, res) => {
 
     let user = await usersModel.findOne({ _id: payload.id })
     if (!user) return res.status(401).json({ message: "unauthorized" })//invalid token
-    let token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.TOKEN_PRIVATE_KEY, { expiresIn: '20s' })
+    let token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.TOKEN_PRIVATE_KEY, { expiresIn: '1h' })
     res.status(200).json({ token })
 
 
